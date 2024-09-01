@@ -7,21 +7,23 @@ package main
 // go build -buildmode=plugin mtiming.go
 //
 
-import "../mr"
-import "strings"
-import "fmt"
-import "os"
-import "syscall"
-import "time"
-import "sort"
-import "io/ioutil"
+import (
+	"fmt"
+	"os"
+	"sort"
+	"strings"
+	"syscall"
+	"time"
+
+	"6.824-golabs-2020/src/mr"
+)
 
 func nparallel(phase string) int {
 	// create a file so that other workers will see that
 	// we're running at the same time as them.
 	pid := os.Getpid()
 	myfilename := fmt.Sprintf("mr-worker-%s-%d", phase, pid)
-	err := ioutil.WriteFile(myfilename, []byte("x"), 0666)
+	err := os.WriteFile(myfilename, []byte("x"), 0666)
 	if err != nil {
 		panic(err)
 	}
@@ -45,7 +47,7 @@ func nparallel(phase string) int {
 			err := syscall.Kill(xpid, 0)
 			if err == nil {
 				// if err == nil, xpid is alive.
-				ret += 1
+				ret++
 			}
 		}
 	}
@@ -79,7 +81,7 @@ func Map(filename string, contents string) []mr.KeyValue {
 }
 
 func Reduce(key string, values []string) string {
-	//n := nparallel("reduce")
+	// n := nparallel("reduce")
 
 	// sort values to ensure deterministic output.
 	vv := make([]string, len(values))
