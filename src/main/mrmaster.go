@@ -14,7 +14,7 @@ import (
 	"os"
 	"time"
 
-	"6.824-golabs-2020/src/mr"
+	"6.824-go-2020/src/mr"
 )
 
 func main() {

@@ -14,7 +14,7 @@ import (
 	"plugin"
 	"sort"
 
-	"6.824-golabs-2020/src/mr"
+	"6.824-go-2020/src/mr"
 )
 
 // for sorting by key.

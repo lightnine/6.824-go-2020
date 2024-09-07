@@ -16,7 +16,7 @@ import (
 	"os"
 	"plugin"
 
-	"6.824-golabs-2020/src/mr"
+	"6.824-go-2020/src/mr"
 )
 
 func main() {
@@ -35,16 +35,16 @@ func main() {
 func loadPlugin(filename string) (func(string, string) []mr.KeyValue, func(string, []string) string) {
 	p, err := plugin.Open(filename)
 	if err != nil {
-		log.Fatalf("cannot load plugin %v", filename)
+		log.Fatalf("cannot load plugin %v, err: %+v", filename, err)
 	}
 	xmapf, err := p.Lookup("Map")
 	if err != nil {
-		log.Fatalf("cannot find Map in %v", filename)
+		log.Fatalf("cannot find Map in %v, err: %+v", filename, err)
 	}
 	mapf := xmapf.(func(string, string) []mr.KeyValue)
 	xreducef, err := p.Lookup("Reduce")
 	if err != nil {
-		log.Fatalf("cannot find Reduce in %v", filename)
+		log.Fatalf("cannot find Reduce in %v, err: %+v", filename, err)
 	}
 	reducef := xreducef.(func(string, []string) string)
 
